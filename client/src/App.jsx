@@ -8,6 +8,8 @@ import Navbar from "./components/Navbar";
 import Home from "./pages/Home";
 import Register from "./pages/Register";
 import Login from "./pages/Login";
+import Dashboard from "./pages/user/Dashboard";
+import ForgotPassword from "./pages/ForgottenPassword";
 
 function App() {
   return (
@@ -27,7 +29,9 @@ function App() {
       />
       <Routes>
         <Route path="/" element={<Home />} />
+        <Route path="/user/dashboard" element={<Dashboard />} />
         <Route path="/register" element={<Register />} />
+        <Route path="/forgot-password" element={<ForgotPassword />} />
         <Route path="/login" element={<Login />} />
       </Routes>
     </BrowserRouter>

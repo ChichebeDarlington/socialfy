@@ -6,8 +6,8 @@ import AuthForm from "../components/forms/AuthForms";
 import { useNavigate } from "react-router-dom";
 
 const Login = () => {
-  const [email, setEmail] = useState("ryan@gmail.com");
-  const [password, setPassword] = useState("rrrrrr");
+  const [email, setEmail] = useState("mazi@gmail.com");
+  const [password, setPassword] = useState("secret123");
   const [loading, setLoading] = useState(false);
 
   const navigate = useNavigate();
@@ -24,7 +24,7 @@ const Login = () => {
           password,
         }
       );
-      console.log(data);
+      localStorage.setItem("auth", JSON.stringify(data));
       navigate("/");
     } catch (error) {
       toast.error(error.response.data);
@@ -60,6 +60,14 @@ const Login = () => {
           <p className="text-center">
             Not yet registered? <Link to="/register">Register</Link>
           </p>
+        </div>
+      </div>
+
+      <div className="row">
+        <div className="col text-center">
+          <Link to="/forgot-password" className="text-danger">
+            Forgot password
+          </Link>
         </div>
       </div>
     </div>
