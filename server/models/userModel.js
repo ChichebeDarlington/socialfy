@@ -28,6 +28,7 @@ const userSchema = new Schema(
     photo: String,
     following: [{ type: Schema.ObjectId, ref: "User" }],
     followers: [{ type: Schema.ObjectId, ref: "User" }],
+    username: { type: String, unique: true, required: true },
   },
   { timestamps: true }
 );

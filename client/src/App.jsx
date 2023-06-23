@@ -10,6 +10,8 @@ import Register from "./pages/Register";
 import Login from "./pages/Login";
 import Dashboard from "./pages/user/Dashboard";
 import ForgotPassword from "./pages/ForgottenPassword";
+import EditPost from "./components/editPost/EditPost";
+import ProfileUpdate from "./pages/user/profile/ProfileUpdate";
 
 function App() {
   return (
@@ -30,9 +32,12 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/user/dashboard" element={<Dashboard />} />
+        <Route path="/user/profile/update" element={<ProfileUpdate />} />
+
         <Route path="/register" element={<Register />} />
         <Route path="/forgot-password" element={<ForgotPassword />} />
         <Route path="/login" element={<Login />} />
+        <Route path="/:_id" element={<EditPost />} />
       </Routes>
     </BrowserRouter>
   );

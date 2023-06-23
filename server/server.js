@@ -3,6 +3,7 @@ import cors from "cors";
 import dotenv from "dotenv";
 import DBConnect from "./database/database.js";
 import userRoute from "./routes/userRoute.js";
+import postRoute from "./routes/postRoute.js";
 
 dotenv.config();
 
@@ -15,6 +16,7 @@ app.use(cors());
 
 // route middleware
 app.use("/api/user", userRoute);
+app.use("/api/post", postRoute);
 
 const port = process.env.PORT || 7000;
 const start = async () => {

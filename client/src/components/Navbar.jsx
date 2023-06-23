@@ -27,6 +27,25 @@ const Nav = () => {
       >
         SOCIALFY
       </Link>
+      {/* <ul>
+        <li>
+          <Link>{state?.user?.name}</Link>
+          <ul className="dropdown">
+            <li>
+              <Link>host</Link>
+            </li>
+            <li>
+              <Link>host</Link>
+            </li>
+            <li>
+              <Link>host</Link>
+            </li>
+            <li>
+              <Link>host</Link>
+            </li>
+          </ul>
+        </li>
+      </ul> */}
       {state ? (
         <>
           <Link
@@ -36,6 +55,14 @@ const Nav = () => {
             } nav-link text-light`}
           >
             {state?.user?.name}
+          </Link>
+          <Link
+            to="/user/profile/update"
+            className={`${
+              current === "/user/profile/update" && "active"
+            } nav-link text-light`}
+          >
+            Profile
           </Link>
           <li onClick={logout} className="nav-link text-light login">
             Logout

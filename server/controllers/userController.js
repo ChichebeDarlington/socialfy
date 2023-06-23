@@ -1,6 +1,7 @@
 import User from "../models/userModel.js";
 import { hashPassword, comparePassword } from "../bcrypt/bcrypt.js";
 import jwt from "jsonwebtoken";
+import { nanoid } from "nanoid";
 
 export const register = async (req, res) => {
   //  console.log("REGISTER ENDPOINT => ", req.body);
@@ -17,10 +18,16 @@ export const register = async (req, res) => {
   // hash password
   const hashedPassword = await hashPassword(password);
 
-  const user = new User({ name, email, password: hashedPassword, secret });
+  const user = new User({
+    name,
+    email,
+    password: hashedPassword,
+    secret,
+    username: nanoid(),
+  });
   try {
     await user.save();
-    console.log("REGISTERED USE => ", user);
+    // console.log("REGISTERED USE => ", user);
     return res.json({
       ok: true,
     });
@@ -57,7 +64,7 @@ export const login = async (req, res) => {
 };
 
 export const currentUser = async (req, res) => {
-  console.log(req.ath);
+  // console.log(req.ath);
   try {
     const user = await User.findById(req.auth.userId);
     // res.json(user);
