@@ -110,3 +110,41 @@ export const forgottenPassword = async (req, res) => {
     });
   }
 };
+
+export const profileUpdate = async (req, res) => {
+  const { username, name, about, password, secret } = req.body;
+  console.log(req.body);
+  try {
+    const data = {};
+
+    if (username) {
+      data.username = username;
+    }
+    if (name) {
+      data.name = name;
+    }
+    if (password) {
+      if (password.length < 7) {
+        return res
+          .status(400)
+          .json({ error: "Password should be longer than 6 characters" });
+      } else {
+        data.password = await hashPassword(password);
+      }
+    }
+    if (secret) {
+      data.secret = secret;
+    }
+    if (about) {
+      data.about = about;
+    }
+    let user = await User.findByIdAndUpdate(req.auth._id, data, { new: true });
+    user.password = undefined;
+    username.secret = undefined;
+    return res.status(201).json({ data, ok: true });
+  } catch (error) {
+    if (error.code === 11000) {
+      return res.status(400).json({ error: "Duplicate username" });
+    }
+  }
+};

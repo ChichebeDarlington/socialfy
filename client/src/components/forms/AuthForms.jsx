@@ -35,11 +35,11 @@ const AuthForm = ({
         </div>
         <div className="form-group p-2">
           <small>
-            <label className="text-muted">Username</label>
+            <label className="text-muted">About</label>
           </small>
           <input
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
+            value={about}
+            onChange={(e) => setAbout(e.target.value)}
             type="text"
             className="form-control"
             placeholder="Enter name"
@@ -72,6 +72,7 @@ const AuthForm = ({
         type="email"
         className="form-control"
         placeholder="Enter name"
+        disabled={profile === true}
       />
     </div>
 
@@ -120,7 +121,9 @@ const AuthForm = ({
     <div className="form-group p-2">
       <button
         disabled={
-          page === "login"
+          profile
+            ? loading
+            : page === "login"
             ? !email || !password
             : !name || !email || !secret || !password
         }

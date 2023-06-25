@@ -25,7 +25,7 @@ const Login = () => {
         }
       );
       localStorage.setItem("auth", JSON.stringify(data));
-      navigate("/");
+      navigate("/user/dashboard");
     } catch (error) {
       toast.error(error.response.data);
       console.log(error);

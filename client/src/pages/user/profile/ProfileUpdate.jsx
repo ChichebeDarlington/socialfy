@@ -1,9 +1,10 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
 import { toast } from "react-toastify";
 import { Modal } from "antd";
 import { Link } from "react-router-dom";
 import AuthForm from "../../../components/forms/AuthForms";
+import { useStateContext } from "../../../components/context/AppContext";
 
 const ProfileUpdate = () => {
   const [name, setName] = useState("");
@@ -16,26 +17,36 @@ const ProfileUpdate = () => {
 
   const [ok, setOk] = useState(false);
 
+  const { state } = useStateContext();
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
     try {
-      const { data } = await axios.post(
-        "http://localhost:8000/api/user/register",
+      const { data } = await axios.patch(
+        "http://localhost:8000/api/user/profile-update",
         {
           name,
           email,
           password,
           secret,
+          username,
+          about,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${state.token}`,
+          },
         }
       );
-      setName("");
-      setEmail("");
-      setPassword("");
-      setSecret("");
+      console.log(data);
+      //   if (data.error) {
+      //     toast.error(data.error);
+      //     setLoading(false);
+      //   }
       setOk(data.ok);
       setLoading(false);
-      toast.success("Registration successful");
+      toast.success("Profile update successful");
       console.log(data);
     } catch (error) {
       toast.error(error.response.data);
@@ -43,6 +54,13 @@ const ProfileUpdate = () => {
       console.log(error);
     }
   };
+
+  useEffect(() => {
+    setAbout(state?.user?.about);
+    setUsername(state?.user?.username);
+    setEmail(state?.user?.email);
+    setName(state?.user?.name);
+  }, [state && state.user]);
 
   return (
     <div className="container-fluid">
@@ -69,7 +87,7 @@ const ProfileUpdate = () => {
             setUsername={setUsername}
             about={about}
             setAbout={setAbout}
-            profile
+            profile={true}
           />
         </div>
       </div>
@@ -82,7 +100,7 @@ const ProfileUpdate = () => {
             onCancel={() => setOk(false)}
             footer={null}
           >
-            <p>You have successfully registered.</p>
+            <p>You have successfully updated your profile.</p>
             <Link to="/login" className="btn btn-primary btn-sm">
               Login
             </Link>

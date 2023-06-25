@@ -5,6 +5,8 @@ import { useEffect, useState } from "react";
 
 const Nav = () => {
   const [current, setCurrent] = useState("");
+  const [display, setDisplay] = useState(false);
+
   const { state, setState } = useStateContext();
 
   const navigate = useNavigate();
@@ -27,28 +29,46 @@ const Nav = () => {
       >
         SOCIALFY
       </Link>
-      {/* <ul>
-        <li>
-          <Link>{state?.user?.name}</Link>
-          <ul className="dropdown">
-            <li>
-              <Link>host</Link>
-            </li>
-            <li>
-              <Link>host</Link>
-            </li>
-            <li>
-              <Link>host</Link>
-            </li>
-            <li>
-              <Link>host</Link>
-            </li>
-          </ul>
-        </li>
-      </ul> */}
+
       {state ? (
         <>
-          <Link
+          <ul>
+            <li onClick={() => setDisplay(!display)}>
+              <Link>{state?.user?.name}</Link>
+              <p style={{ textAlign: "center", cursor: "pointer" }}>
+                <i className="arrow down"></i>
+              </p>
+              <ul className={display ? " block" : "dropdown"}>
+                <li>
+                  <Link
+                    to="/user/dashboard"
+                    className={`${
+                      current === "/user/dashboard" && "active"
+                    } nav-link text-light`}
+                  >
+                    Dashboard
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    to="/user/profile/update"
+                    className={`${
+                      current === "/user/profile/update" && "active"
+                    } nav-link text-light`}
+                  >
+                    Profile
+                  </Link>
+                </li>
+                <li
+                  onClick={logout}
+                  className="nav-link text-light login logout"
+                >
+                  Logout
+                </li>
+              </ul>
+            </li>
+          </ul>
+          {/* <Link
             to="/user/dashboard"
             className={`${
               current === "/user/dashboard" && "active"
@@ -66,7 +86,7 @@ const Nav = () => {
           </Link>
           <li onClick={logout} className="nav-link text-light login">
             Logout
-          </li>
+          </li> */}
         </>
       ) : (
         <>
